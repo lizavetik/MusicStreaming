@@ -1,7 +1,9 @@
 package com.tms.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity(name = "songs")
 public class Song {
     @Id

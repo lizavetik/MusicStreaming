@@ -1,9 +1,10 @@
 package com.tms.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-
+@Data
 @Entity(name = "service_user")
 public class UserInfo {
     @Id
