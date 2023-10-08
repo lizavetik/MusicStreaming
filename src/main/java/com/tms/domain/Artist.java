@@ -2,9 +2,13 @@ package com.tms.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity(name = "artist")
+@EqualsAndHashCode
+@ToString
 public class Artist {
     @Id
     @SequenceGenerator(name = "mySeqGen", sequenceName ="artist_id_seq", allocationSize = 1)

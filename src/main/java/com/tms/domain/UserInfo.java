@@ -2,10 +2,15 @@ package com.tms.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 @Data
 @Entity(name = "service_user")
+@EqualsAndHashCode
+@Component
 public class UserInfo {
     @Id
     @SequenceGenerator(name="mySeqGen", sequenceName = "user_id_seq", allocationSize = 1)
