@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 
 import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -24,8 +26,12 @@ public class JwtUtils {
     private Long expiration;
 
     public String generateJwtToken(String login){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", login);
+        //Map<String, Object> claims2 = new HashMap<>();
         return Jwts.builder()
-                .setSubject(login)
+                .setSubject("UserDetails")
+                .setClaims(claims)
                 .setExpiration(new Date((new Date().getTime() + expiration)))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }

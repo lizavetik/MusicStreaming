@@ -44,6 +44,9 @@ public class UserService {
     public Optional<UserInfo> findUserByLastName(String firstName) {
         return userRepository.findUsersByLastName(firstName);
     }
+    public Optional<UserInfo> findUserByFirstName(String firstName) {
+        return userRepository.findUsersByFirstName(firstName);
+    }
     public void deleteUserById(Integer id) {
         userRepository.deleteById(id);
     }

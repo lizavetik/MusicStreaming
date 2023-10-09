@@ -34,6 +34,11 @@ public class UserController {
         UserInfo user = userService.findUserByLastName(lastName).orElseThrow(UserNotFoundException::new);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+    @GetMapping("/first/{firstname}")
+    public ResponseEntity<UserInfo> getUserByFirstName(@PathVariable String firstname) {
+        UserInfo user = userService.findUserByFirstName(firstname).orElseThrow(UserNotFoundException::new);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<UserInfo> getUser(@PathVariable @Parameter(description = "Это id пользователя") Integer id) {
         UserInfo user = userService.getUser(id).orElseThrow(UserNotFoundException::new);

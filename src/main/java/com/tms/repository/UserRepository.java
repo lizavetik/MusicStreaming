@@ -14,5 +14,6 @@ public interface UserRepository extends JpaRepository<UserInfo, Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM user_info WHERE lastName = :fn")
     Optional<UserInfo> findUsersByLastName(String fn);
 
-
+    @Query(nativeQuery = true, value = "SELECT * FROM user_info WHERE firstName = :fn")
+    Optional<UserInfo> findUsersByFirstName(String fn);
 }

@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 @Slf4j
 @Component
-@RequiredArgsConstructor//аннотация ломбока, делает конструктор из финальных полей
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final CustomUserDetailService customUserDetailService;
@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String token = jwtUtils.getTokenFromHttpRequest(request);
 
     if(token!=null && jwtUtils.validateToken(token)){
-        String login = jwtUtils.generateJwtToken(token);
+        String login = jwtUtils.getLoginFromJwt(token);
         UserDetails userDetails =  customUserDetailService.loadUserByUsername(login);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails,
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 userDetails.getAuthorities()
         );
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        log.info("Authenticated user with login: " + login);                                                            //будет log о том, что user c таким login прошел аутентификацию
+        log.info("Authenticated user with login: " + login);
     }
         filterChain.doFilter(request, response);
     }

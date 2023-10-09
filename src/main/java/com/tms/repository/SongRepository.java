@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Integer> {
-    @Query(nativeQuery = true, value = "SELECT * FROM user_info WHERE songName = :sn")
+    @Query(nativeQuery = true, value = "SELECT * FROM songs WHERE song_name = :sn")
     Optional<Song> findSongByName(String sn);
 
 }
