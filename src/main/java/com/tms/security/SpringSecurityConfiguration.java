@@ -56,12 +56,11 @@ public class SpringSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers(HttpMethod.GET,"/user").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/user").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST,"/authentication").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/registration").permitAll()
-
-                                .requestMatchers(HttpMethod.GET,"/user/first/firstname").hasRole("USER")
-                                .requestMatchers(HttpMethod.GET,"/user").hasRole("")
+                                .requestMatchers(HttpMethod.GET,"/song").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/artist").hasAnyRole("USER", "ADMIN")
 
                                 .anyRequest().authenticated())
                 .sessionManagement((session)-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -87,6 +87,18 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.8.1</version>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <user>postgres</user>
+                    <password>root</password>
+                    <cleanDisabled>false</cleanDisabled>
+                    <baselineVersion>2.1.0</baselineVersion>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
