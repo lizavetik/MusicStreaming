@@ -1,6 +1,8 @@
 package com.tms.controller;
 
+import com.tms.ErrorResponse;
 import com.tms.domain.UserInfo;
+import com.tms.exception.NotAuthorizedException;
 import com.tms.service.UserService;
 import com.tms.exception.UserNotFoundException;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -58,5 +60,11 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> exceptionHandler (NotAuthorizedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }

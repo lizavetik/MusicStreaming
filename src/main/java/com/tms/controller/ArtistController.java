@@ -1,5 +1,7 @@
 package com.tms.controller;
 
+import com.tms.ErrorResponse;
+import com.tms.exception.NotAuthorizedException;
 import com.tms.exception.NotFoundException;
 import com.tms.domain.Artist;
 import com.tms.service.ArtistService;
@@ -44,5 +46,11 @@ public class ArtistController {
     public ResponseEntity<HttpStatus> delete(@RequestBody Integer id) {
         artistService.deleteArtistById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> exceptionHandler (NotAuthorizedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }

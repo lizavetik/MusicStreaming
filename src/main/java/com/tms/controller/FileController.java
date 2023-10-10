@@ -1,5 +1,7 @@
 package com.tms.controller;
 
+import com.tms.ErrorResponse;
+import com.tms.exception.NotAuthorizedException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -72,4 +74,10 @@ import java.util.stream.Collectors;
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> exceptionHandler (NotAuthorizedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
     }

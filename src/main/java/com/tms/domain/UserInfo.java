@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.RowSet;
 import java.awt.print.PrinterJob;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -21,8 +22,9 @@ import java.util.List;
 @Component
 public class UserInfo {
     @Id
-    @SequenceGenerator(name="mySeqGen", sequenceName = "user_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "mySeqGen")
+    //@SequenceGenerator(name="mySeqGen", sequenceName = "user_id_seq", allocationSize = 1)
+    //@Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "username")
@@ -44,17 +46,22 @@ public class UserInfo {
     @Column(name = "updated")
     private LocalDateTime updatedAt;
 
-    private String inserted_by;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "l_service_user_song", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "song_id"))
+    private Collection<Song> songs;
     @PreRemove
     @PreUpdate
     private void preventUnAuthorizedAccess() throws NotAuthorizedException {
 
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) SecurityContextHolder
+                .getContext().getAuthentication().getAuthorities();
 
         if(roles.stream().noneMatch(ga -> ga.getAuthority().equals("ROLE_ADMIN"))
-                && !name.equals(this.inserted_by)){
-            throw new NotAuthorizedException("You can alter and remove only your own comments");
+                && !name.equals(this.userName)){
+            throw new NotAuthorizedException("You can alter and remove only your profile");
         }
     }
 }

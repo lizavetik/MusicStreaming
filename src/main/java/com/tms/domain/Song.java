@@ -3,6 +3,8 @@ package com.tms.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collection;
+
 @Data
 @Entity(name = "songs")
 public class Song {
@@ -18,4 +20,7 @@ public class Song {
 
     @Column(name = "year_of_release")
     private Integer yearOfRelease;
+
+    @ManyToMany(mappedBy = "songs",fetch = FetchType.EAGER)
+    private Collection<UserInfo> users;
 }

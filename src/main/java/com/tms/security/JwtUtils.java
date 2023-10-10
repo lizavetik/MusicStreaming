@@ -58,7 +58,8 @@ public class JwtUtils {
     }
     public String getLoginFromJwt(String token){
     try{
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token)
+                .getBody().get("username").toString();
     }catch(Exception e){
                 log.info("Can't take login from JWT: " + e);
             }

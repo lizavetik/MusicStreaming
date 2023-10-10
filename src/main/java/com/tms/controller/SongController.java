@@ -1,5 +1,7 @@
 package com.tms.controller;
 
+import com.tms.ErrorResponse;
+import com.tms.exception.NotAuthorizedException;
 import com.tms.exception.NotFoundException;
 import com.tms.domain.Song;
 import com.tms.service.SongService;
@@ -48,6 +50,12 @@ public class SongController {
     public ResponseEntity<HttpStatus> delete(@RequestBody Integer id) {
         songService.deleteSongById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> exceptionHandler (NotAuthorizedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }
 
