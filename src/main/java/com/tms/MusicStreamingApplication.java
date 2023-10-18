@@ -17,12 +17,12 @@ import io.swagger.v3.oas.annotations.info.Info;
                         email = "fiz.kovalevaee@bsu.by",
                         url = "@kovalevaliz"
                 )
-
         )
 )
 @SpringBootApplication
 public class MusicStreamingApplication {
     static final Logger log = (Logger) LoggerFactory.getLogger(MusicStreamingApplication.class);
+
     public static void main(String[] args) {
         SpringApplication.run(MusicStreamingApplication.class, args);
     }

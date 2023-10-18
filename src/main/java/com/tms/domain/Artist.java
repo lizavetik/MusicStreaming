@@ -1,6 +1,10 @@
 package com.tms.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,8 +15,8 @@ import lombok.ToString;
 @ToString
 public class Artist {
     @Id
-    @SequenceGenerator(name = "mySeqGen", sequenceName ="artist_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "mySeqGen")
+    @SequenceGenerator(name = "artistSeqGen", sequenceName = "artist_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "artistSeqGen")
     private Integer id;
     @Column(name = "artist_name")
     private String artistName;

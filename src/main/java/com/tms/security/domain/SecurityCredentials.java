@@ -1,7 +1,13 @@
 package com.tms.security.domain;
 
 import com.tms.domain.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityCredentials {
     @Id
-    @SequenceGenerator(name="mySeqGen", sequenceName = "security_create_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "mySeqGen")
+    @SequenceGenerator(name = "securitySeqGen", sequenceName = "security_create_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "securitySeqGen")
     private Long id;
 
     @Column(name = "user_login")

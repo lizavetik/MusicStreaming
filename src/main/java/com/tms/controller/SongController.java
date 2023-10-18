@@ -5,6 +5,7 @@ import com.tms.exception.NotAuthorizedException;
 import com.tms.exception.NotFoundException;
 import com.tms.domain.Song;
 import com.tms.service.SongService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/song", produces = MediaType.APPLICATION_JSON_VALUE)
+@SecurityRequirement(name = "Bearer Authentication")
 public class SongController {
     private final SongService songService;
+
     public SongController(SongService songService) {
         this.songService = songService;
     }
@@ -25,19 +28,27 @@ public class SongController {
         Song song = songService.getSong(id).orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(song, HttpStatus.OK);
     }
+
     @GetMapping("/song_name/{songName}")
     public ResponseEntity<Song> getSongByName(@PathVariable String songName) {
         Song song = songService.findSongByName(songName).orElseThrow(NotFoundException::new);
         return new ResponseEntity<>(song, HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<List<Song>> getAllSongs() {
         List<Song> songs = songService.getSongs();
-        if(songs.isEmpty()){
+        if (songs.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
+        } else {
             return new ResponseEntity<>(songs, HttpStatus.OK);
         }
+    }
+
+    @PutMapping
+    public ResponseEntity<HttpStatus> updateSong(@RequestBody Song song) {
+        songService.updateSong(song);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping
@@ -53,7 +64,7 @@ public class SongController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<ErrorResponse> exceptionHandler (NotAuthorizedException e){
+    private ResponseEntity<ErrorResponse> exceptionHandler(NotAuthorizedException e) {
         ErrorResponse response = new ErrorResponse(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }

@@ -15,19 +15,25 @@ public class ArtistService {
     public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
+
     public List<Artist> getArtists() {
-            return artistRepository.findAll(Sort.by("id"));
-        }
+        return artistRepository.findAll(Sort.by("id"));
+    }
+
+    public void updateArtist(Artist artist) {
+        artistRepository.saveAndFlush(artist);
+    }
 
     public Optional<Artist> getArtist(Integer id) {
-            return artistRepository.findById(id);
-        }
+        return artistRepository.findById(id);
+    }
 
     public Artist createArtist(Artist artist) {
         return (Artist) artistRepository.save(artist);
     }
+
     public void deleteArtistById(Integer id) {
-            artistRepository.deleteById(id);
-        }
+        artistRepository.deleteById(id);
+    }
 }
 

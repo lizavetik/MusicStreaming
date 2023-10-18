@@ -5,7 +5,6 @@ import com.tms.repository.SongRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +20,13 @@ public class SongService {
     public List<Song> getSongs() {
         return songRepository.findAll(Sort.by("id"));
     }
+
     public Optional<Song> findSongByName(String songName) {
         return songRepository.findSongByName(songName);
+    }
+
+    public void updateSong(Song song) {
+        songRepository.saveAndFlush(song);
     }
 
     public Optional<Song> getSong(Integer id) {

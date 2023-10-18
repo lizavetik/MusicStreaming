@@ -17,10 +17,11 @@ public class CustomUserDetailService implements UserDetailsService {
     public CustomUserDetailService(SecurityCredentialsRepository securityCredentialsRepository) {
         this.securityCredentialsRepository = securityCredentialsRepository;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<SecurityCredentials> securityCredentials = securityCredentialsRepository.findByUserLogin(username);
-        if (securityCredentials.isEmpty()){
+        if (securityCredentials.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
         return User

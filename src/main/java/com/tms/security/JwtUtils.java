@@ -25,7 +25,7 @@ public class JwtUtils {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String generateJwtToken(String login){
+    public String generateJwtToken(String login) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", login);
         //Map<String, Object> claims2 = new HashMap<>();
@@ -35,34 +35,38 @@ public class JwtUtils {
                 .setExpiration(new Date((new Date().getTime() + expiration)))
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
-    public Boolean validateToken(String token){
-        try{Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+
+    public Boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
-        }catch (SignatureException e){
+        } catch (SignatureException e) {
             log.info("Invalid JWT signature: " + e);
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             log.info("Expired JWT token: " + e);
-        }catch (UnsupportedAddressTypeException e){
+        } catch (UnsupportedAddressTypeException e) {
             log.info("Unsupported JWT token: " + e);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.info("Illegal arguments: " + e);
         }
         return false;
     }
-    public String getTokenFromHttpRequest(HttpServletRequest request){
+
+    public String getTokenFromHttpRequest(HttpServletRequest request) {
         final String bearerToken = request.getHeader("Authorization");
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return null;
     }
-    public String getLoginFromJwt(String token){
-    try{
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token)
-                .getBody().get("username").toString();
-    }catch(Exception e){
-                log.info("Can't take login from JWT: " + e);
-            }
-    return null;
+
+    public String getLoginFromJwt(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token)
+                    .getBody().get("username").toString();
+        } catch (Exception e) {
+            log.info("Can't take login from JWT: " + e);
+        }
+        return null;
     }
 }

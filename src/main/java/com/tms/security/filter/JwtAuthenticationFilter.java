@@ -16,28 +16,30 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final CustomUserDetailService customUserDetailService;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-    String token = jwtUtils.getTokenFromHttpRequest(request);
+        String token = jwtUtils.getTokenFromHttpRequest(request);
 
-    if(token!=null && jwtUtils.validateToken(token)){
-        String login = jwtUtils.getLoginFromJwt(token);
-        UserDetails userDetails =  customUserDetailService.loadUserByUsername(login);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                //userDetails.getPassword(),
-                userDetails.getAuthorities()
-        );
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        log.info("Authenticated user with login: " + login);
-    }
+        if (token != null && jwtUtils.validateToken(token)) {
+            String login = jwtUtils.getLoginFromJwt(token);
+            UserDetails userDetails = customUserDetailService.loadUserByUsername(login);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    //userDetails.getPassword(),
+                    userDetails.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            log.info("Authenticated user with login: " + login);
+        }
         filterChain.doFilter(request, response);
     }
 }

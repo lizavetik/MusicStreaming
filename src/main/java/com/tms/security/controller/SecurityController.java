@@ -21,16 +21,16 @@ public class SecurityController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<HttpStatus> registration(@RequestBody RegistrationDTO registrationDto){
+    public ResponseEntity<HttpStatus> registration(@RequestBody RegistrationDTO registrationDto) {
         securityService.registration(registrationDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/authentication")
-    public ResponseEntity<AuthResponse> generateToken(@RequestBody AuthRequest authRequest){
-        String token =securityService.generateToken(authRequest);
-        if(token.isBlank()) {
-            return new  ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<AuthResponse> generateToken(@RequestBody AuthRequest authRequest) {
+        String token = securityService.generateToken(authRequest);
+        if (token.isBlank()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(new AuthResponse(token), HttpStatus.OK);
     }

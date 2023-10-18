@@ -36,17 +36,18 @@ public class SecurityService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String generateToken(AuthRequest authRequest){
-        Optional<SecurityCredentials> credentials =securityCredentialsRepository.findByUserLogin(authRequest.getLogin());
-        if(credentials.isPresent() && passwordEncoder.matches(authRequest.getPassword(), credentials.get().getUserPass())){
+    public String generateToken(AuthRequest authRequest) {
+        Optional<SecurityCredentials> credentials = securityCredentialsRepository.findByUserLogin(authRequest.getLogin());
+        if (credentials.isPresent() && passwordEncoder.matches(authRequest.getPassword(), credentials.get().getUserPass())) {
             return jwtUtils.generateJwtToken(authRequest.getLogin());
         }
         return "";
     }
+
     @Transactional(rollbackFor = Exception.class)
     public void registration(RegistrationDTO registrationDTO) {
         Optional<SecurityCredentials> result = securityCredentialsRepository.findByUserLogin(registrationDTO.getUserLogin());
-        if (result.isEmpty()){
+        if (result.isEmpty()) {
             userInfo.setFirstName(registrationDTO.getFirstName());
             userInfo.setLastName(registrationDTO.getLastName());
             userInfo.setCreatedAt(LocalDateTime.now());
