@@ -1,7 +1,6 @@
 package com.tms.controller;
 
 import com.tms.ErrorResponse;
-import com.tms.domain.Song;
 import com.tms.exception.NotAuthorizedException;
 import com.tms.exception.NotFoundException;
 import com.tms.domain.Artist;
