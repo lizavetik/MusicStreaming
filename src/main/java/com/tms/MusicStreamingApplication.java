@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 )
 @SpringBootApplication
 public class MusicStreamingApplication {
-    static final Logger log = (Logger) LoggerFactory.getLogger(MusicStreamingApplication.class);
+    static final Logger log = LoggerFactory.getLogger(MusicStreamingApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(MusicStreamingApplication.class, args);

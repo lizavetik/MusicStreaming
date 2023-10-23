@@ -34,7 +34,7 @@ public class SongService {
     }
 
     public Song createSong(Song song) {
-        return (Song) songRepository.save(song);
+        return songRepository.save(song);
     }
 
     public void deleteSongById(Integer id) {

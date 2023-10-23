@@ -6,13 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Column;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
 @Entity(name = "artist")
-@EqualsAndHashCode
-@ToString
 public class Artist {
     @Id
     @SequenceGenerator(name = "artistSeqGen", sequenceName = "artist_id_seq", allocationSize = 1)

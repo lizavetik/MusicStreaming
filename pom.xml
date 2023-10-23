@@ -67,6 +67,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+        </dependency>
      </dependencies>
     <build>
         <plugins>
@@ -87,8 +92,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>9.8.1</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/postgres</url>
-                    <user>postgres</user>
+                    <url>jdbc:postgresql://localhost:5432/music_service</url>
+                    <user>music_service</user>
                     <password>root</password>
                     <cleanDisabled>false</cleanDisabled>
                     <baselineVersion>2.1.0</baselineVersion>

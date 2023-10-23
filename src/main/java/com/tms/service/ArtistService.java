@@ -29,7 +29,7 @@ public class ArtistService {
     }
 
     public Artist createArtist(Artist artist) {
-        return (Artist) artistRepository.save(artist);
+        return artistRepository.save(artist);
     }
 
     public void deleteArtistById(Integer id) {

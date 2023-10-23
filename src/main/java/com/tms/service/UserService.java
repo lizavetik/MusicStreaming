@@ -26,10 +26,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<UserInfo> getUserInfo(Integer id) {
-        return userRepository.findById(id);
-    }
-
     public void createUser(UserInfo userInfo) {
         userInfo.setCreatedAt(LocalDateTime.now());
         userInfo.setUpdatedAt(LocalDateTime.now());
