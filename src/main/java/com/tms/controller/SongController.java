@@ -6,26 +6,26 @@ import com.tms.exception.NotFoundException;
 import com.tms.domain.Song;
 import com.tms.service.SongService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/song", produces = MediaType.APPLICATION_JSON_VALUE)
 @SecurityRequirement(name = "Bearer Authentication")
+@Slf4j
 public class SongController {
     private final SongService songService;
+    private final Path ROOT_FILE_PATH = Paths.get("data");
 
     public SongController(SongService songService) {
         this.songService = songService;
@@ -54,9 +54,15 @@ public class SongController {
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> updateSong(@RequestBody Song song) {
+    public ResponseEntity<HttpStatus> updateSong(@RequestBody Song song, @RequestParam("file") MultipartFile file) {
         songService.updateSong(song);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            Files.copy(file.getInputStream(), this.ROOT_FILE_PATH.resolve(file.getOriginalFilename()));
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (IOException e) {
+            log.info("IOException" + e);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping

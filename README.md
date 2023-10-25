@@ -17,3 +17,50 @@ If users encounter any issues or need help with the project, they can refer to t
 # Maintenance and Contributions
 
 This project is actively maintained and regularly updated by a team of dedicated developers. Bug fixes, feature enhancements, and security updates are part of the ongoing commitment to providing the best possible music streaming experience. Users can also contribute to the project by reporting any bugs they encounter or suggesting new features through the project's official GitHub repository. The development team welcomes community feedback and contributions to make the project even better.
+
+# Model in application
+User, Artist, Song
+
+# Controllers
+### UserController "/user"
+has CRUD operations:     
+GET: getUsers,    
+POST: createUser,     
+PUT: updateUser,    
+DELETE(id): deleteUser     
+and some others: GET: getUserByLastName /last/{lastName}; getUserByFirstName /first/{firstname}; getUser /{id}   
+
+### SongController "/song"
+has CRUD operations:   
+GET: getSongs,    
+POST: createSong, (you should add filename of the MP3 file)    
+PUT: updateSong,    DELETE(id): deleteSong    
+and some others: GET: getSongByName /song_name/{songName}
+
+### ArtistController
+has CRUD operations: 
+GET: getArtist,   
+POST: createArtist,    
+PUT: updateArtist,   
+DELETE(id): deleteArtist /id 
+
+# Registration with postman
+1. /registration
+2. {   
+   "firstName": "string",   
+   "lastName": "string",  
+   "userLogin": "string",  
+   "userPass": "string"  
+   }
+3. registration
+
+# To authorize with postman
+
+1. /authorisation
+2. {   
+   "login": "string",   
+   "password": "string"   
+   }
+3. get token
+4. do a request with token
+

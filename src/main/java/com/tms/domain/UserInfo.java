@@ -57,7 +57,6 @@ public class UserInfo {
     @PreRemove
     @PreUpdate
     private void preventUnAuthorizedAccess() throws NotAuthorizedException {
-
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) SecurityContextHolder
                 .getContext().getAuthentication().getAuthorities();
