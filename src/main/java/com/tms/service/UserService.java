@@ -22,7 +22,6 @@ public class UserService {
     }
 
     public Optional<UserInfo> getUser(Integer id) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findById(id);
     }
 

@@ -31,11 +31,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringSecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final CustomUserDetailService customUserDetailService;
 
-    public SpringSecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailService customUserDetailService, CustomUserDetailService customUserDetailService1) {
+    public SpringSecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.customUserDetailService = customUserDetailService1;
     }
 
     private static final String[] AUTH_WHITELIST = {

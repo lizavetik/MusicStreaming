@@ -6,6 +6,7 @@ import com.tms.exception.NotFoundException;
 import com.tms.domain.Song;
 import com.tms.service.SongService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/song", produces = MediaType.APPLICATION_JSON_VALUE)
 @SecurityRequirement(name = "Bearer Authentication")
+@Slf4j
 public class SongController {
     private final SongService songService;
     private final Path ROOT_FILE_PATH = Paths.get("data");
@@ -58,7 +60,7 @@ public class SongController {
             Files.copy(file.getInputStream(), this.ROOT_FILE_PATH.resolve(file.getOriginalFilename()));
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (IOException e) {
-            System.out.println(e);
+            log.info("IOException" + e);
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
